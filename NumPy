@@ -1,0 +1,131 @@
+
+my_list = [1,2,3]
+import numpy as np
+
+arr= np.array(my_list)
+arr
+
+my_mat=[[1,2,3],[4,5,6],[7,8,9]]
+my_mat
+np.array(my_mat)
+
+#create an array within a range with a specified step
+np.arange(0,10,2)
+
+# create an array with zeroes
+np.zeros(3)
+np.zeros((2,3))
+
+#create ones in matrix
+np.ones((3,4))
+#note the difference between a list and a matrix. Array has only one square bracket where as a 2d matrix has 2 square brackets.
+
+#create an array with a strating and ending with number of equal spaces with linspace
+np.linspace(0,5,5)
+np.linspace(0,5,100)
+
+#create identity matrices with eye
+np.eye(4)
+
+#create an array with random numbers 
+np.random.rand(2,3)
+
+np.random.randint(1,100)
+np.random.randint(1,101,10)
+
+#working on arrays
+arr=np.arange(0,25)
+arr
+ranarr=np.random.randint(0,100,10)
+ranarr
+arr=arr.reshape(5,5)
+arr
+
+#get max value fro array
+ranarr.max()
+ranarr.min()
+
+#get index location of max value
+ranarr.argmax()
+
+#shape of array
+arr.shape
+
+#reshaped
+arr.shape
+
+#find the datatype of an array
+arr.dtype
+
+#instaed of calling the whole function of randint everytime you can import and use it as a method
+
+from numpy.random import randint
+randint(2,100,12)
+
+#indexing
+a=randint(1,100,15)
+a
+a[2]
+
+#slicing
+a[1:4]
+
+#all elements upto an index
+a[:12]
+
+#all elemnets from an index
+a[3:]
+slice_of_a=a[2:13]
+slice_of_a
+slice_of_a[:]=0
+slice_of_a
+#note that i sliced the array from 2 to 13, only 2 inlusive and changed the values to 0.
+#Now lets see what happens to the main array
+a
+
+#note that this has changed the values in the main array as well to 0. That means we were viewing a sliced version of a and not the copy
+#So to make a copy we should use the copy function
+
+a_copy=a.copy()
+a_copy
+a_copy=a_copy[2:13]
+a_copy
+#now change value
+a_copy[2:10]=1
+a_copy
+a
+#this made a copy of the array and changed the values accordingly
+
+#2d array
+arr_2d=np.array([[1,2,3],[12,56,78],[23,54,72],[90,65,32]])
+arr_2d
+
+#indexing
+arr_2d[3][2]
+arr_2d[3,2]
+
+#slicing
+arr_2d[:2,:2]
+
+#conditional selection
+new=randint(1,100,10)
+new
+even=new[new%2==0]
+even
+
+#taking random numbers and putting it in a matrix
+b=randint(1,100,50).reshape(5,10)
+b
+
+# array operations(ufunc)
+a=np.arange(1,11)
+a
+a+a
+a=a-1
+# check that by zero will give a warning but will put nan when div is by 0
+a/a
+np.max(a)
+np.exp(a)
+np.log(a)
+np.sin(a)
+
