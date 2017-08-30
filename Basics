@@ -1,0 +1,141 @@
+
+# coding: utf-8
+
+# In[1]:
+
+def times2(var):
+    return var**2
+
+
+# In[2]:
+
+times2(5)
+
+
+# In[3]:
+
+seq=[1,2,3,4,5,6]
+
+
+# In[5]:
+
+list(map(times2,seq))
+
+
+# In[6]:
+
+#lambda
+
+
+# In[8]:
+
+list(map(lambda num:num**2,seq))
+
+
+# In[11]:
+
+#filter
+list(filter(lambda num:num%2 == 0, seq))
+
+
+# In[12]:
+
+#methods
+
+
+# In[19]:
+
+s='My name Is sam! # yay! # great #123'
+
+
+# In[15]:
+
+s.lower()
+
+
+# In[16]:
+
+s.upper()
+
+
+# In[23]:
+
+x=s.split('#')
+x
+
+
+# In[29]:
+
+s.find('y')
+
+
+# In[30]:
+
+#pop and append
+
+
+# In[36]:
+
+lst=[1,2,3,4,5]
+
+
+# In[37]:
+
+popped=lst.pop(1)
+
+
+# In[40]:
+
+lst
+
+
+# In[39]:
+
+popped
+
+
+# In[41]:
+
+lst.append(10)
+
+
+# In[42]:
+
+lst
+
+
+# In[43]:
+
+'x' in [1,2,x]
+
+
+# In[44]:
+
+'x' in [1,2,'x']
+
+
+# In[45]:
+
+#tuples
+
+
+# In[46]:
+
+tup=((1,2),(3,4),(5,6))
+
+
+# In[47]:
+
+for x in tup:
+    print(x)
+
+
+# In[48]:
+
+for (a,b) in tup:
+    print(a)
+
+
+
+
+
