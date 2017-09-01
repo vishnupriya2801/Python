@@ -1,0 +1,63 @@
+
+
+import pandas as pd
+import os
+os.getcwd()
+os.chdir('/Users/vishnupriyakodavatiganti/Desktop')
+
+sal=pd.read_csv('Salaries.csv')
+sal
+sal.head(2)
+sal.info()
+
+# average base pay
+basepay=sal['BasePay'].mean()
+
+import numpy as np
+
+OvertimePay=sal['OvertimePay']
+
+#max overtime pay
+OvertimePay.max()
+
+#jobtitle of a person
+sal[sal['EmployeeName'] == 'NATHANIEL FORD']['JobTitle']
+
+#max salary paid
+sal.loc[sal['TotalPayBenefits'].argmax()]
+
+#min salary paid
+sal.loc[sal['TotalPayBenefits'].argmin()]
+
+#all columns grouped by year and check how base pay is varying
+sal.groupby('Year').mean()
+
+#the unique job titles
+sal['JobTitle'].unique
+
+#number of unique job titles available
+sal['JobTitle'].nunique
+
+#top 5 most common jobs
+sal['JobTitle'].value_counts().head(5)
+
+#number of job titles represented only once in 2013
+sum(sal[sal['Year']==2013]['JobTitle'].value_counts()==1)
+
+#how many word in title have chief upper case or lower
+
+def cheif_str(title):
+    if 'chief' in title.lower().split():
+         return True
+    else:
+        return False
+
+sum(sal['JobTitle'].apply (lambda x:cheif_str(x)))
+
+#correlation between length of job title and Total pay benifits
+sal['title_len']=sal['JobTitle'].apply(len)
+
+sal[['TotalPayBenefits','title_len']].corr()
+
+
+
