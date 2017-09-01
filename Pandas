@@ -1,0 +1,28 @@
+
+
+import numpy as np
+import pandas as pd
+
+labels = ['a','b','c']
+my_data=[12,25,33]
+arr=np.array(my_data)
+d={'a':12,'b':25,'c':33}
+
+pd.Series(data=my_data)
+pd.Series(data=arr)
+pd.Series(data=my_data,index=labels)
+pd.Series(d)
+pd.Series(labels)
+#note that series can takes dtype as object so you can pass mixed data types when compared with array in numpy.
+# Pandas is basically built on numpy
+
+ser1=pd.Series([1,2,3,4],['USA','Germany','USSR','Japan'])
+ser1
+
+ser2=pd.Series([1,2,6,4],['USA','Germany','Italy','Japan'])
+ser2
+
+ser1+ ser2
+# note that where ever it could find the index matced it will add the points. Where it didnt find a match it will insert NAN
+# also note that ut converts the data type to float so that there will be no loss of information.
+
