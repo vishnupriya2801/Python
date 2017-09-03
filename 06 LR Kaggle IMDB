@@ -1,0 +1,73 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+get_ipython().magic('matplotlib inline')
+import os
+os.getcwd()
+
+#read the data from csv
+df =pd.read_csv('movie.csv')
+df=df.dropna(how='any')
+df.head()
+df.info()
+
+#describe the numerical items in the tables with some statistical information
+df.describe()
+
+#gives the column names 
+df.columns
+
+sns.pairplot(df)
+
+#shows how normally distributed the data is
+sns.jointplot(data=df,x='duration',y='imdb_score',kind='hex')
+
+sns.lmplot(x='duration',y='imdb_score',data=df)
+
+df.columns
+#all numeric columns
+x=df[['num_critic_for_reviews', 'duration',
+       'director_facebook_likes', 'actor_3_facebook_likes',
+       'actor_1_facebook_likes', 'gross','num_voted_users', 
+      'cast_total_facebook_likes','facenumber_in_poster','num_user_for_reviews',
+         'budget', 'title_year', 'actor_2_facebook_likes',
+    'aspect_ratio', 'movie_facebook_likes']]
+
+y=df[['imdb_score']]
+
+#dividing the data into train and test
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=101)
+from sklearn.linear_model import LinearRegression
+
+#Linear regression model
+lm=LinearRegression()
+
+#fitting the data on the train data
+lm.fit(X_train,y_train)
+
+#intercept of the model
+print(lm.intercept_)
+
+#array of coeffecients of the parameters
+lm.coef_
+X_train.columns
+qwe=pd.DataFrame(lm.coef_,x.columns,columns=['coeff'])
+
+#predict thetarget on test data
+predictions=lm.predict(X_test)
+predictions
+
+#a straight line means we did a very god job
+plt.scatter(y_test,predictions)
+
+#check if residuals are normally distributed for model choice
+sns.distplot((y_test-predictions))
+
+#regression evaluation matrix 1)MAE 2)MSE 3)RMSE
+from sklearn import metrics
+metrics.mean_absolute_error(y_test,predictions)
+metrics.mean_squared_error(y_test,predictions)
+np.sqrt(metrics.mean_squared_error(y_test,predictions))
+metrics.explained_variance_score(y_test,predictions)
