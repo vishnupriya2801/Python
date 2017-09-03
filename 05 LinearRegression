@@ -1,0 +1,80 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+get_ipython().magic('matplotlib inline')
+
+import os
+os.getcwd()
+
+#read the data from csv
+df =pd.read_csv('house_data.csv')
+df.head()
+df.info()
+
+#describe the numerical items in the tables with some statistical information
+df.describe()
+
+#gives the column names 
+df.columns
+
+sns.pairplot(df)
+
+#shows how normally distributed the data is
+sns.distplot(df['price'])
+
+sns.heatmap(df.corr())
+
+df.columns
+x=df[['id', 'date', 'bedrooms', 'bathrooms', 'sqft_living',
+       'sqft_lot', 'floors', 'waterfront', 'view', 'condition', 'grade',
+       'sqft_above', 'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode',
+       'lat', 'long', 'sqft_living15', 'sqft_lot15']]
+y=df[['price']]
+
+#dividing the data into train and test
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=101)
+
+from sklearn.linear_model import LinearRegression
+#Linear regression model
+lm=LinearRegression()
+
+#fitting the data on the train data
+lm.fit(X_train,y_train)
+
+#intercept of the model
+print(lm.intercept_)
+
+#array of coeffecients of the parameters
+lm.coef_
+
+X_train.columns
+cdf=pd.DataFrame(lm.coef_,X.columns,columns=['coeff'])
+
+#from sklearn.datasets import load_boston
+#boston=load_boston()
+#print(boston['DESCR'])
+#print(boston['data'])
+#pd.DataFrame(data=boston)
+#bostond=pd.DataFrame.from_dict(boston, orient='index', dtype=None)
+#bostond
+#bostond.head()
+
+
+#predict thetarget on test data
+predictions=lm.predict(X_test)
+predictions
+
+#a straight line means we did a very god job
+plt.scatter(y_test,predictions)
+
+#check if residuals are normally distributed for model choice
+sns.distplot((y_test-predictions))
+
+#regression evaluation matrix 1)MAE 2)MSE 3)RMSE
+from sklearn import metrics
+metrics.mean_absolute_error(y_test,predictions)
+metrics.mean_squared_error(y_test,predictions)
+np.sqrt(metrics.mean_squared_error(y_test,predictions))
