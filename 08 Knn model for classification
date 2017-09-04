@@ -1,0 +1,56 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+get_ipython().magic('matplotlib inline')
+import os
+os.getcwd()
+
+df=pd.read_csv('data.csv',index_col=0)
+df.head()
+df.dropna()
+
+#standardise the data to one scale to avoid bias due to diff in scle in caluculating distance
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+df.head()
+df.dropna(how='any')
+df.isnull()
+scaled_features=scaler.transform(df.drop("Target",axis=1))
+df_f=pd.DataFrame(scaled_features,columns=df.colums[-1])
+
+#test and train data split
+from sklearn.cross_validation import train_test_split
+x=df_f
+y=df['Target']
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
+
+#knn model
+from sklearn.neighbors import KNeighborsClassifier
+knn=KNeighborsClassifier(n_neighbors=2)
+knn.fit(X_train,y_train)
+predict=knn.predict(X_test)
+
+from sklearn.metrics import classification_report,confusion_matrix
+print(confusion_matrix(y_test,predict))
+print(classification_report(y_test,predict))
+
+#to determine the correct k value i will go ahead and iterate k in a range and compare the error rates ,elbow method
+error_rate=[]
+for i in range(1,40):
+    
+    knn=KNeighborsClassifier(n_neighbors=i)
+    knn.fit(X_train,y_train)
+    predict_i=knn.predict(X_test)
+    error_rate.append(np.mean(pred_i != y_test))
+    
+plt.plot(range(1,40),error_rate)
+
+#now I see that I get a min at 17 and after 34 but I will stick to 17
+knn=KNeighborsClassifier(n_neighbors=17)
+knn.fit(X_train,y_train)
+predict=knn.predict(X_test)
+print(confusion_matrix(y_test,predict))
+print('\n')
+print(classification_report(y_test,predict))
+
