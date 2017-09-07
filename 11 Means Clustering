@@ -1,0 +1,32 @@
+
+# Not predicting any data as this is made up data  so we wont need pandas or numpy as there is no df
+import seaborn as sns
+import matplotlib.pyplot as plt
+get_ipython().magic('matplotlib inline')
+
+from sklearn.datasets import make_blobs
+data=make_blobs(n_samples=200,n_features=2,centers=4,cluster_std=1.8,random_state=101)
+
+from sklearn.cluster import KMeans
+kmeans=KMeans(n_clusters=4)
+KMeans
+kmeans.fit(data[0])
+kmeans.cluster_centers_
+kmeans.labels_
+
+#for real world data this is done. 
+#These are the clusters but since it is a made up data we can go ahead and compare our predicted and actual labelled data
+fig,(ax1,ax2)=plt.subplots(1,2,sharey=True)
+ax1.set_title('K Means')
+ax1.scatter(data[0][:,0],data[0][:,1],c=kmeans.labels_,cmap='rainbow')
+ax2.set_title('Actual')
+ax2.scatter(data[0][:,0],data[0][:,1],c=data[1],cmap='rainbow')
+
+#grid search
+from sklearn.grid_search import GridSearchCV
+param_grid={'n_clusters':(2,3,4,5)}
+grid=GridSearchCV(KMeans(),param_grid,verbose=3)
+grid.fit(data[0])
+grid.best_params_
+
+#if we used cross validation we could have done a confusion matrix and classification report like other models
